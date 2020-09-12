@@ -1,3 +1,4 @@
 *.stl
 *.png
 *.bak
+.deps

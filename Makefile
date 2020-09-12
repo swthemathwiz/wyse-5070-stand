@@ -7,26 +7,53 @@
 # Desc:    Makefile for directory 
 #
 
-SOURCES = wyse-stand-infill.scad wyse-stand-mesh.scad wyse-stand-large.scad wyse-stand-minimal.scad wyse-stand.scad wyse-5070-box.scad
+OPENSCAD = openscad
 
-STANDS = wyse-stand-infill.scad wyse-stand-mesh.scad wyse-stand-large.scad wyse-stand-minimal.scad
+SRCS = \
+	wyse-stand-infill.scad \
+	wyse-stand-mesh.scad \
+	wyse-stand-large.scad \
+	wyse-stand-minimal.scad \
+	wyse-stand.scad \
+	wyse-5070-box.scad \
+	bag.scad
+
+BUILDS = \
+	wyse-stand-infill.scad \
+	wyse-stand-mesh.scad \
+	wyse-stand-large.scad \
+	wyse-stand-minimal.scad
  
-TARGETS = $(STANDS:.scad=.stl)
+TARGETS = $(BUILDS:.scad=.stl)
 
-IMAGES = $(STANDS:.scad=.png)
+IMAGES = $(BUILDS:.scad=.png)
 
-%.stl : %.scad wyse-stand.scad wyse-5070-box.scad
-	openscad -o $@ $<
+DEPDIR := .deps
+DEPFLAGS = -d $(DEPDIR)/$*.d
 
-%.png : %.scad wyse-stand.scad wyse-5070-box.scad
-	openscad -o $@ $<
+COMPILE.scad = $(OPENSCAD) -o $@ $(DEPFLAGS)
+RENDER.scad = $(OPENSCAD) -o $@
 
 all: $(TARGETS)
 
 images: $(IMAGES)
 
-clean:
-	rm -f *.stl *.bak
+%.stl : %.scad
+%.stl : %.scad $(DEPDIR)/%.d | $(DEPDIR)
+	$(COMPILE.scad) $<
 
-distclean:
-	rm -f *.png
+%.png : %.scad
+	$(RENDER.scad) $<
+
+clean:
+	rm -f *.stl *.bak *.png
+
+distclean: clean
+	rm -rf $(DEPDIR)
+
+$(DEPDIR): ; @mkdir -p $@
+
+DEPFILES := $(TARGETS:%.stl=$(DEPDIR)/%.d)
+$(DEPFILES):
+
+include $(wildcard $(DEPFILES))
