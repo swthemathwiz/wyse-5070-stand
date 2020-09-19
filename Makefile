@@ -16,7 +16,8 @@ SRCS = \
 	wyse-stand-minimal.scad \
 	wyse-stand.scad \
 	wyse-5070-box.scad \
-	bag.scad
+	bag.scad \
+	rounded.scad
 
 BUILDS = \
 	wyse-stand-infill.scad \

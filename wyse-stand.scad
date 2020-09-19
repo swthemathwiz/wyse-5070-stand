@@ -9,6 +9,7 @@
 
 use <wyse-5070-box.scad>
 include <bag.scad>
+include <rounded.scad>
 
 // box: show a version mounted on the stand ("none", "slim", "extended")
 boxstyles = [ "none", "slim", "extended" ];
@@ -43,15 +44,7 @@ size = [205,75,7];
 // Generate a cylinder with a rounded top.
 //
 module round_top_cylinder(d,h,ro=roundover) {
-  r = d/2;
-  p = r*ro/100; 
-  intersection() {
-    minkowski() {
-      cylinder( r=r-p, h=h-p );
-      sphere( r=p );
-    }
-    translate( [-r, -r, 0 ] ) cube( [2*r, 2*r, h] );
-  }
+  rounded_top_cylinder(d=d,h=h,radius=d*ro/200);
 } // end round_top_cylinder
 
 // round_top_and_bottom_cylinder:
@@ -59,12 +52,7 @@ module round_top_cylinder(d,h,ro=roundover) {
 // Generate a cylinder with a rounded top and bottom.
 //
 module round_top_and_bottom_cylinder(d,h,ro=roundover) {
-  r = d/2;
-  p = r*ro/100; 
-  minkowski() {
-    cylinder( r=r-p, h=h-2*p );
-    sphere( r=p );
-  }
+  rounded_top_cylinder(d=d,h=h,radius=d*ro/200);
 } // end round_top_and_bottom_cylinder
 
 // round_top_cube:
