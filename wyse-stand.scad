@@ -32,7 +32,7 @@ roundover=15;
 baseroundover=15;
 
 // Dell OEM stand size:
-//   Rectanglar 205mm x 75mm
+//   Rectangular 205mm x 75mm
 //   7mm depth including 4 rubber feet on each corner
 //   5mm without feet
 //
