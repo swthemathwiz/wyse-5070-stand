@@ -51,7 +51,7 @@ module wyse_5070_box(v,transparency = 0.5, clipz = 0) {
       cube( [v.x*2, v.y*2, clipz > 0 ? clipz : v.z*2 ] );
     }
   }
-} // end box
+} // end wyse_5070_box
 
 module wyse_5070_slim(transparency=0.5,clipz=0) {
   v = [ 184, 35.6, 184 ];
