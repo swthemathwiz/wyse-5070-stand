@@ -4,7 +4,7 @@
 // File:    rounded.scad
 // Project: Dell Wyse 5070 Stand
 // License: CC BY-NC-SA 4.0 (Attribution-NonCommercial-ShareAlike)
-// Desc:    Rounded cube/cylnder utilities
+// Desc:    Rounded cube/cylinder utilities
 //
 
 // rounded_cube:
