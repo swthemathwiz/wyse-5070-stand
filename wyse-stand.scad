@@ -16,21 +16,23 @@ infillonly = false;
 
 // Show a model mounted on the stand ("none", "slim", "extended")
 box = "none"; // [ "none", "slim", "extended" ]
-boxstyles = [ "none", "slim", "extended" ];
 
-// Base styles:
+// Base styles: "large", "mesh", "minimal" with "round", "roundover"
 base = [ "minimal", "roundover" ];
-basestyles = [ "large", "mesh", "minimal", "round", "roundover" ];
 
-// Wing styles (only used for "minimal" style)
+// Wing styles (only used for "minimal" style): "angled" or "side", "round" or "straight"
 wing = [ "side", "straight" ];
-wingstyles = [ "angled", "side", "round", "straight" ];
 
 // Round-over for nubs/posts as a percentage of radius
 roundover = 15; // [0:50]
 
 // Round-over for the top of a base as a percentage of height (only when option "roundover" is specified)
 baseroundover = 15; // [0:50]
+
+/* [Hidden] */
+wingstyles = [ "angled", "side", "round", "straight" ];
+boxstyles = [ "none", "slim", "extended" ];
+basestyles = [ "large", "mesh", "minimal", "round", "roundover" ];
 
 // Dell OEM stand size:
 //   Rectangular 205mm x 75mm
