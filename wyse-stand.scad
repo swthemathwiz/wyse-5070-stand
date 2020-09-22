@@ -11,26 +11,26 @@ use <wyse-5070-box.scad>
 include <bag.scad>
 include <rounded.scad>
 
-// box: show a version mounted on the stand ("none", "slim", "extended")
-boxstyles = [ "none", "slim", "extended" ];
-box = "none";
-
-// infillonly: option to generate map of areas that need high-infill
+// Option to generate areas that need high-infill
 infillonly = false;
 
-// base styles:
-basestyles = [ "large", "mesh", "minimal", "round", "roundover", "long" ];
-base = [ "minimal", "roundover" ];
+// Show a model mounted on the stand ("none", "slim", "extended")
+box = "none"; // [ "none", "slim", "extended" ]
+boxstyles = [ "none", "slim", "extended" ];
 
-// wing styles (only used for "minimal" style)
-wingstyles = [ "angled", "side", "round", "straight" ];
+// Base styles:
+base = [ "minimal", "roundover" ];
+basestyles = [ "large", "mesh", "minimal", "round", "roundover" ];
+
+// Wing styles (only used for "minimal" style)
 wing = [ "side", "straight" ];
+wingstyles = [ "angled", "side", "round", "straight" ];
 
 // Round-over for nubs/posts as a percentage of radius
-roundover=15;
+roundover = 15; // [0:50]
 
 // Round-over for the top of a base as a percentage of height (only when option "roundover" is specified)
-baseroundover=15;
+baseroundover = 15; // [0:50]
 
 // Dell OEM stand size:
 //   Rectangular 205mm x 75mm
