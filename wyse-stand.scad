@@ -11,41 +11,44 @@ use <wyse-5070-box.scad>
 include <bag.scad>
 include <rounded.scad>
 
-// Option to generate areas that need high-infill
-infillonly = false;
+// Option to generate volumes that need high-infill
+infill_only = false;
 
-// Show a model mounted on the stand ("none", "slim", "extended")
+// Show model mounted on the stand ("none", "slim", "extended")
 box = "none"; // [ "none", "slim", "extended" ]
 
-// Base styles: "large", "mesh", "minimal" with "round", "roundover"
+// Base styling: "large", "mesh", "minimal" with "round", "roundover"
 base = [ "minimal", "roundover" ];
 
-// Wing styles (only used for "minimal" style): "angled" or "side", "round" or "straight"
+// Round over edges of top of base as a percentage of height (only for "roundover" base style)
+base_round_over = 15; // [0:50]
+
+// Thickness of base
+base_thickness = 7; // [4:0.5:12]
+
+// Wing styling: "angled" or "side", "round" or "straight" (only for "minimal" base style)
 wing = [ "side", "straight" ];
 
-// Round-over for nubs/posts as a percentage of radius
-roundover = 15; // [0:50]
-
-// Round-over for the top of a base as a percentage of height (only when option "roundover" is specified)
-baseroundover = 15; // [0:50]
+// Round-over edges for nubs/posts as a percentage of radius
+round_over = 15; // [0:50]
 
 /* [Hidden] */
-wingstyles = [ "angled", "side", "round", "straight" ];
-boxstyles = [ "none", "slim", "extended" ];
-basestyles = [ "large", "mesh", "minimal", "round", "roundover" ];
+wing_styles = [ "angled", "side", "round", "straight" ];
+box_styles = [ "none", "slim", "extended" ];
+base_styles = [ "large", "mesh", "minimal", "round", "roundover" ];
 
 // Dell OEM stand size:
 //   Rectangular 205mm x 75mm
 //   7mm depth including 4 rubber feet on each corner
 //   5mm without feet
 //
-size = [205,75,7];
+size = [205,75,base_thickness];
 
 // round_top_cylinder:
 //
 // Generate a cylinder with a rounded top.
 //
-module round_top_cylinder(d,h,ro=roundover) {
+module round_top_cylinder(d,h,ro=round_over) {
   rounded_top_cylinder(d=d,h=h,radius=d*ro/200);
 } // end round_top_cylinder
 
@@ -53,7 +56,7 @@ module round_top_cylinder(d,h,ro=roundover) {
 //
 // Generate a cylinder with a rounded top and bottom.
 //
-module round_top_and_bottom_cylinder(d,h,ro=roundover) {
+module round_top_and_bottom_cylinder(d,h,ro=round_over) {
   rounded_top_cylinder(d=d,h=h,radius=d*ro/200);
 } // end round_top_and_bottom_cylinder
 
@@ -61,13 +64,13 @@ module round_top_and_bottom_cylinder(d,h,ro=roundover) {
 //
 // Rounded top cube.
 //
-module round_top_cube(v,ro=baseroundover,center=false) {
+module round_top_cube(v,ro=base_round_over,center=false) {
   round_top_volume(v, ro, center ? [0,0,0] : v/2 ) cube(v,center=center);
 } // end round_top_cube
 
 // round_top_volume:
 //
-// Operates on its children creating a roundover effect based
+// Operates on its children creating a round_over effect based
 // on percentage of height. Operations are:
 //    1. Translate volume to origin
 //    2. Scale X-Y down by volume based-on the radius to be added
@@ -77,7 +80,7 @@ module round_top_cube(v,ro=baseroundover,center=false) {
 //     b. Intersect with full volume
 //    5. Restore volume to origin
 //
-module round_top_volume(v,ro=baseroundover,c=[0,0,0]) {
+module round_top_volume(v,ro=base_round_over,c=[0,0,0]) {
   p = v.z*ro/100;
 
   if( p != 0 ) {
@@ -105,7 +108,7 @@ module nub() {
   // Diameter: 9.85mm Height 5.5mm
   union() {
     round_top_cylinder( d=9.85, h=5.5 );
-    if( bag_contains(base,"mesh") || infillonly ) {
+    if( bag_contains(base,"mesh") || infill_only ) {
       translate( [ 0, 0, -size.z] ) cylinder( r2=9.85/2, r1=15/2, h=size.z );
     } 
   }
@@ -144,51 +147,15 @@ module add_to_base(pos) {
 module rectangle(v,width=0) {
   w = width <= 0 ? v.z : width;
 
-  //round_top_volume( v, bag_contains(base,"roundover") ? baseroundover : 0 )
+  //round_top_volume( v, bag_contains(base,"roundover") ? base_round_over : 0 )
   difference() {
-    round_top_cube( v, bag_contains(base,"roundover") ? baseroundover : 0, center=true );
+    round_top_cube( v, bag_contains(base,"roundover") ? base_round_over : 0, center=true );
     //cube( v, center=true );
     if( v.y > w && v.x > w ) {
       cube( [v.x-2*w, v.y-2*w, v.z*2], center=true );
     }
   }
 } // end rectangle
-
-// meshline:
-//
-// Generate a mesh line.
-//
-module meshline(recess) {
-  simple = false;
-
-  w = 2;
-  h = size.z-recess;
-  l = 2*min(size.x,size.y); // It doesn't have to be exact (just big)
-
-  if( simple ) {
-    cube( [ w, l, h ], center=true );
-  }
-  else {
-    partition=0.2;
-    angle=30;
-
-    profile = [ [0,0], [0,h], [w*partition,h], [w,h-(w-w*partition)*cos(angle)], [w,0] ];
-    translate( [-l/2,0,0] ) rotate( [90,0,0] ) rotate( [0,90,0] )
-       linear_extrude( height=l, $fn = 8 ) translate( [-w/2,-h/2] ) polygon( profile );
-  }
-} // end meshline
-
-// mesh_position:
-//
-// Position the radiating wings
-//
-module meshposition(i,r,s)
-{
-  intersection() {
-    translate( [i*s/cos(90+r),0,0] ) rotate( [0,0,r] ) children();
-    cube( size, center = true );
-  }
-} // end meshposition
 
 // mesh:
 //
@@ -198,6 +165,42 @@ module meshposition(i,r,s)
 //   5 mm diamond mesh with bars being 2mm wide
 //
 module mesh() {
+  // mesh_line:
+  //
+  // Generate a mesh line.
+  //
+  module mesh_line(recess) {
+    simple = false;
+
+    w = 2;
+    h = size.z-recess;
+    l = 2*min(size.x,size.y); // It doesn't have to be exact (just big)
+
+    if( simple ) {
+      cube( [ w, l, h ], center=true );
+    }
+    else {
+      partition=0.2;
+      angle=30;
+
+      profile = [ [0,0], [0,h], [w*partition,h], [w,h-(w-w*partition)*cos(angle)], [w,0] ];
+      translate( [-l/2,0,0] ) rotate( [90,0,0] ) rotate( [0,90,0] )
+	 linear_extrude( height=l, $fn = 8 ) translate( [-w/2,-h/2] ) polygon( profile );
+    }
+  } // end mesh_line
+
+  // mesh_position:
+  //
+  // Position the radiating wings
+  //
+  module mesh_position(i,r,s)
+  {
+    intersection() {
+      translate( [i*s/cos(90+r),0,0] ) rotate( [0,0,r] ) children();
+      cube( size, center = true );
+    }
+  } // end mesh_position
+
   step   = 5;
   count  = max( size.y, size.x ) / step + 2;
   recess = 2; // Below the enclosing frame by this amount
@@ -205,8 +208,8 @@ module mesh() {
   translate( [0, 0, -recess/2 ] )
     union() {
       for( i = [-count/2 : +count/2] ) {
-	meshposition( i, +30, 5 ) meshline(recess);
-	meshposition( i, -30, 5 ) meshline(recess);
+	mesh_position( i, +30, 5 ) mesh_line(recess);
+	mesh_position( i, -30, 5 ) mesh_line(recess);
       }
   }
 } // end mesh
@@ -222,28 +225,6 @@ module mesh() {
 function relative_to_front(x) = 205/2-x;
 function relative_to_rear(x) = -205/2+x;
 
-// minimalwing:
-//
-// Generate the supporting "wings" of the smaller base.
-//
-module minimalwing(w,l,i) {
-  assert( i>=0 && i<=3 );
-
-  v = [w, l, size.z];
-
-  rotate( [ 0, 0, bag_contains( wing, "side" ) ? i*180 : (i*90+45) ] )
-    translate( [0,-l/2,0] ) {
-      round_top_volume( v, bag_contains(base,"roundover") ? baseroundover : 0 ) 
-	if( bag_contains( wing, "round" ) ) { 
-	  r = w/2;
-	  translate( [0,+r/2,0] ) cube( [w, l-r, size.z], center=true ); 
-	  translate( [0,-l/2+r,0] ) cylinder( r=r, h=size.z, center=true );
-	}
-	else
-	  cube( v, center=true ); 
-    }
-} // end minimalwing
-
 // minimal:
 //
 // Generate a smaller base that looks something like:
@@ -253,6 +234,28 @@ module minimalwing(w,l,i) {
 // / \
 //
 module minimal() {
+  // minimal_wing:
+  //
+  // Generate the supporting "wings" of the smaller base.
+  //
+  module minimal_wing(w,l,i) {
+    assert( i>=0 && i<=3 );
+
+    v = [w, l, size.z];
+
+    rotate( [ 0, 0, bag_contains( wing, "side" ) ? i*180 : (i*90+45) ] )
+      translate( [0,-l/2,0] ) {
+	round_top_volume( v, bag_contains(base,"roundover") ? base_round_over : 0 ) 
+	  if( bag_contains( wing, "round" ) ) { 
+	    r = w/2;
+	    translate( [0,+r/2,0] ) cube( [w, l-r, size.z], center=true ); 
+	    translate( [0,-l/2+r,0] ) cylinder( r=r, h=size.z, center=true );
+	  }
+	  else
+	    cube( v, center=true ); 
+      }
+  } // end minimal_wing
+
   // 1x Front Post (F): 68.75mm from front, on center line 
   // 2x Rear Posts (R): 35mm from end, 20.25mm apart (10.125mm off Y-center)
   // 2x Nubs: inline with rear posts (10.125 off center)
@@ -279,7 +282,7 @@ module minimal() {
 
   echo(["total length = ", v.x ] );
 
-  round_top_volume( v, bag_contains(base,"roundover") ? baseroundover : 0, c ) {
+  round_top_volume( v, bag_contains(base,"roundover") ? base_round_over : 0, c ) {
     if( bag_contains( base,"round") ) {
       // At front
       translate( [front_origin_X+addon_front, 0, 0 ] ) cylinder( r=w/2, h=h, center=true );
@@ -306,10 +309,10 @@ module minimal() {
     front_wing_X = bag_contains(wing,"angled") ? front_origin_X+w/2+addon_front-wing_offset : front_origin_X;
     rear_wing_X  = bag_contains(wing,"angled") ? rear_origin_X-w/2-addon_rear+wing_offset : rear_origin_X;
 
-    translate( [front_wing_X, 0, 0 ] ) minimalwing( wing_width, wing_length, 0 );
-    translate( [front_wing_X, 0, 0 ] ) minimalwing( wing_width, wing_length, 1 );
-    translate( [rear_wing_X, 0, 0 ] ) minimalwing( wing_width, wing_length, 2 );
-    translate( [rear_wing_X, 0, 0 ] ) minimalwing( wing_width, wing_length, 3 );
+    translate( [front_wing_X, 0, 0 ] ) minimal_wing( wing_width, wing_length, 0 );
+    translate( [front_wing_X, 0, 0 ] ) minimal_wing( wing_width, wing_length, 1 );
+    translate( [rear_wing_X, 0, 0 ] ) minimal_wing( wing_width, wing_length, 2 );
+    translate( [rear_wing_X, 0, 0 ] ) minimal_wing( wing_width, wing_length, 3 );
 
     echo(["total width = ", 2 * wing_length / (bag_contains(wing,"angled") ? sqrt(2) : 1) ] );
   }
@@ -331,7 +334,7 @@ module bottom() {
     minimal();
   }
   else {
-    round_top_cube( size, bag_contains(base,"roundover") ? baseroundover : 0, center=true );
+    round_top_cube( size, bag_contains(base,"roundover") ? base_round_over : 0, center=true );
   }
 } // end bottom
 
@@ -342,11 +345,11 @@ module bottom() {
 module stand() {
   union() {
     // Build the bottom
-    if( !infillonly )
+    if( !infill_only )
       translate( [0,0,+size.z/2] ) bottom();
 
     {
-      $fn = infillonly ? $fn : 60;
+      $fn = infill_only ? $fn : 60;
 
       // 1x Front Post (F): 68.75mm from front, on center line 
       add_to_base( [ relative_to_front( 68.75 ),0] ) post();
@@ -361,7 +364,7 @@ module stand() {
       add_to_base( [relative_to_front( 68.75-26.75 ),-10.125] ) nub();
     }
 
-    if( !infillonly ) {
+    if( !infill_only ) {
       // Clipping here to see how the mounts align...
       if( box == "slim" ) {
 	translate( [relative_to_rear( 35 )+184/2-24,0,size.z+5.5] ) wyse_5070_slim(clipz=60);
@@ -374,19 +377,19 @@ module stand() {
 } // end stand
 
 // Sanity check
-assert( bag_contains(boxstyles,box) );
-assert( bag_contains_bag(basestyles,base) );
-assert( bag_contains_bag(wingstyles,wing) );
-assert( (bag_contains(basestyles,"large") ? 1 : 0) +
-        (bag_contains(basestyles,"minimal") ? 1 : 0) +
-        (bag_contains(basestyles,"mesh") ? 1 : 0) > 1 );
-assert( bag_contains_bag(wingstyles,wing) );
+assert( bag_contains(box_styles,box) );
+assert( bag_contains_bag(base_styles,base) );
+assert( bag_contains_bag(wing_styles,wing) );
+assert( (bag_contains(base_styles,"large") ? 1 : 0) +
+        (bag_contains(base_styles,"minimal") ? 1 : 0) +
+        (bag_contains(base_styles,"mesh") ? 1 : 0) > 1 );
+assert( bag_contains_bag(wing_styles,wing) );
 assert( !(bag_contains(wing,"angled") && bag_contains(wing,"side")) );
 assert( !(bag_contains(wing,"round") && bag_contains(wing,"straight")) );
 
 // The same infill map should work for all since all posts/nubs stay
 // at the same location.
-if( infillonly ) {
+if( infill_only ) {
   // 1.5 mm of padding added so you don't have to align perfectly
   pad = 1.5;
   intersection() {

@@ -9,7 +9,7 @@
 
 // rounded_cube:
 //
-// Generate a cube of <size> with a roundover <radius> in
+// Generate a cube of <size> with a round-over <radius> in
 // the X/Y direction. Centered optionally like a cube.
 //
 module rounded_cube( size, radius, center=false ) {
@@ -32,7 +32,7 @@ module rounded_cube( size, radius, center=false ) {
 // rounded_top_cylinder:
 //
 // Generate a cylinder with a rounded top, with <d,r,h> parameters
-// like cylinder, but <radius> defines the roundover radius.
+// like cylinder, but <radius> defines the round-over radius.
 //
 module rounded_top_cylinder(h,d,r,radius,center=false) {
   assert( is_num(h) && h > 0 );
@@ -54,7 +54,7 @@ module rounded_top_cylinder(h,d,r,radius,center=false) {
 // rounded_top_and_bottom_cylinder:
 //
 // Generate a cylinder with a rounded top and bottom, with <d,r,h> parameters
-// like cylinder, but <radius> defines the roundover radius.
+// like cylinder, but <radius> defines the round-over radius.
 //
 module rounded_top_and_bottom_cylinder(h,d,r,radius,center=false) {
   assert( is_num(h) && h > 0 );

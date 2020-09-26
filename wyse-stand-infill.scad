@@ -8,4 +8,4 @@
 //
 
 include <wyse-stand.scad>
-infillonly = true;
+infill_only = true;

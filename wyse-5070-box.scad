@@ -9,7 +9,7 @@
 
 module wyse_5070_box(v,transparency = 0.5, clipz = 0) {
 
-  // Note: these are reall the interior spots of the drill holes
+  // Note: these are really the interior spots of the drill holes
   module drill_holes(v) {
     // Front holes
     translate( [v.x-58,v.y/2,-0.001] ) cylinder( h=6, r=5 ); 
