@@ -9,7 +9,9 @@
 
 // Minimal version of wyse-stand
 include <wyse-stand.scad>
-// box: show a version mounted on the stand ("none", "slim", "extended")
-box = "none";
+
+// Show model mounted on the stand ("none", "slim", "extended")
+box = "none"; // [ "none", "slim", "extended" ]
+
 base = [ "minimal", "roundover" ];
 wing = [ "side", "straight" ];
