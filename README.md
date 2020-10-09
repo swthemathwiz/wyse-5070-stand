@@ -6,13 +6,13 @@ the existing mounts in the case.
 
 There are three different variations: minimal, large, and mesh.
 
-1. Minimal: is about the width of a slim 5070 with 4 wings and works well for the slim 5070.
+1. **Minimal**: is about the width of a slim 5070 with 4 wings and works well for the slim 5070.
 
-2. Large: is very close in shape and style to the OEM stand.
+2. **Large**: is very close in shape and style to the OEM stand.
 
-3. Mesh: is like the large except that it has a mesh inset that looks like the 5070's textured surface.
+3. **Mesh**: is like the large except that it has a mesh inset that looks like the 5070's textured surface.
 
-The length of each stand is about the length of the 5070 (about 20cm), with minimal being about a centimeter shorter than the large.
+The length of each stand is about the length of the 5070 (about 20cm), with Minimal being about a centimeter shorter than the Large.
 
 ## 3D Printing
 
@@ -29,5 +29,5 @@ on the other axis. It should be plus or minus a few millimeters. And then you're
 
 After a millimeter or two of base, you should be able to see the difference in infill if you've done it correctly.
 
-## Available on Thingiverse
+## Also Available on Thingiverse
 https://www.thingiverse.com/thing:4560865
