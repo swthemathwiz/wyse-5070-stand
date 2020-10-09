@@ -62,41 +62,18 @@ module round_top_and_bottom_cylinder(d,h,ro=round_over) {
 
 // round_top_cube:
 //
-// Rounded top cube.
+// Rounded top cube with round-over radius based on cube height.
 //
-module round_top_cube(v,ro=base_round_over,center=false) {
-  round_top_volume(v, ro, center ? [0,0,0] : v/2 ) cube(v,center=center);
+module round_top_cube(size,ro=base_round_over,center=false) {
+  rounded_top_cube( size, radius=size.z*ro/100, center=center );
 } // end round_top_cube
 
 // round_top_volume:
 //
-// Operates on its children creating a round_over effect based
-// on percentage of height. Operations are:
-//    1. Translate volume to origin
-//    2. Scale X-Y down by volume based-on the radius to be added
-//    3. Minkowski with sphere adding 2*radius in all dimensions
-//    4. Remove rounded over bottom radius:
-//     a. Translate down a radius
-//     b. Intersect with full volume
-//    5. Restore volume to origin
+// Rounded top volume with round-over radius based on volume height.
 //
 module round_top_volume(v,ro=base_round_over,c=[0,0,0]) {
-  p = v.z*ro/100;
-
-  if( p != 0 ) {
-    d = v - [2*p, 2*p, 0];
-    s = [d.x/v.x, d.y/v.y, d.z/v.z ];
-
-    translate(c) intersection() {
-      cube( v, center=true );
-      translate([0, 0, -p ] ) minkowski() {
-	scale( s ) translate(-c) children();
-	sphere( r=p );
-      }
-    }
-  }
-  else
-    children();
+  rounded_top_volume( v, radius=v.z*ro/100, c=c ) children(); 
 } // end round_top_volume
 
 // nub:
