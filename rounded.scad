@@ -26,7 +26,7 @@ module rounded_side_cube( size, radius, center=false ) {
     linear_extrude( height=c.z )
       offset( r=radius )
 	offset( delta=-radius )
-	  square( [c.x,c.y], center=center ); 
+	  square( [c.x,c.y], center=center );
 } // end rounded_side_cube
 
 // rounded_top_cylinder:
@@ -66,7 +66,7 @@ module rounded_top_and_bottom_cylinder(h,d,r,radius,center=false) {
   assert( cylinder_radius > radius );
 
   translate( [0,0,(center?-h/2:0)] )
-    rotate_extrude() 
+    rotate_extrude()
       intersection() {
         translate( [-cylinder_radius, 0 ] ) offset( r=+radius ) offset( delta=-radius ) square( [ 2*cylinder_radius, h ], center=false );
 	square( [cylinder_radius,h] );
