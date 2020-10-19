@@ -9,7 +9,7 @@
 
 // bag_initialize:
 //
-// Returns initialization of a bag. 
+// Returns initialization of a bag.
 //
 function bag_initialize() = [];
 
@@ -17,7 +17,7 @@ function bag_initialize() = [];
 //
 // Add <item> to <bag>.
 //
-function bag_add(bag,item) = assert( is_list(bag) ) concat( bag, item );
+function bag_add(bag,item) = assert( is_list(bag) ) is_undef(item) ? bag : concat( bag, item );
 
 // bag_size:
 //
@@ -53,10 +53,10 @@ function bag_count(bag,item) = assert( is_list(bag) ) len( [ for( i = bag ) if( 
 //
 // Returns the maximum count of duplicates in <bag>.
 //
-function bag_max_count(bag) = bag_is_empty(bag) ? 0 : max( [ for( i = bag ) bag_count(bag,i) ] ); 
+function bag_max_count(bag) = bag_is_empty(bag) ? 0 : max( [ for( i = bag ) bag_count(bag,i) ] );
 
 // bag_is_set:
 //
-// Return true if the bag contains no duplicates.
+// Return true if <bag> contains no duplicates.
 //
 function bag_is_set(bag) = bag_max_count(bag) <= 1;
