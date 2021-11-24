@@ -1,5 +1,5 @@
 # wyse-5070-stand
-This is a 3D-Printable Openscad model of a stand for the [Dell Wyse 5070 Thin Client](https://www.dell.com/en-us/work/shop/wyse-endpoints-and-software/wyse-5070-thin-client/spd/wyse-5070-thin-client) using the existing mounts in the case.
+This is a 3D-Printable [Openscad](https://openscad.org/) model of a stand for the [Dell Wyse 5070 Thin Client](https://www.dell.com/en-us/work/shop/wyse-endpoints-and-software/wyse-5070-thin-client/spd/wyse-5070-thin-client) using the existing mounts in the case.
 
 ## Variations
 
