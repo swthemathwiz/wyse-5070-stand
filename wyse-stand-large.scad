@@ -1,5 +1,5 @@
 //
-// Copyright (c) Stewart Whitman, 2020.
+// Copyright (c) Stewart Whitman, 2020-2021.
 //
 // File:    wyse-stand-large.scad
 // Project: Dell Wyse 5070 Stand
