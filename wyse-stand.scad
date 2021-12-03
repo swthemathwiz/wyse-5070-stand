@@ -57,7 +57,7 @@ module round_top_cylinder(d,h,ro=round_over) {
 // Generate a cylinder with a rounded top and bottom.
 //
 module round_top_and_bottom_cylinder(d,h,ro=round_over) {
-  rounded_top_cylinder(d=d,h=h,radius=d*ro/200);
+  rounded_top_and_bottom_cylinder(d=d,h=h,radius=d*ro/200);
 } // end round_top_and_bottom_cylinder
 
 // round_top_cube:
