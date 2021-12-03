@@ -73,7 +73,7 @@ module round_top_cube(size,ro=base_round_over,center=false) {
 // Rounded top volume with round-over radius based on volume height.
 //
 module round_top_volume(v,ro=base_round_over,c=[0,0,0]) {
-  rounded_top_volume( v, radius=v.z*ro/100, c=c ) children(); 
+  rounded_top_volume( v, radius=v.z*ro/100, c=c ) children();
 } // end round_top_volume
 
 // nub:
@@ -87,7 +87,7 @@ module nub() {
     round_top_cylinder( d=9.85, h=5.5 );
     if( bag_contains(base,"mesh") || infill_only ) {
       translate( [ 0, 0, -size.z] ) cylinder( r2=9.85/2, r1=15/2, h=size.z );
-    } 
+    }
   }
 } // end nub
 
@@ -103,7 +103,7 @@ module post() {
     // Base Diameter: 3.65mm Base Height : 3.6mm
     translate( [0,0,5.5] ) cylinder( r=3.65/2, h=3.6 );
 
-    // Top Diameter: 6.8mm  Top Height: 2mm  
+    // Top Diameter: 6.8mm  Top Height: 2mm
     translate( [0,0,5.5+3.6] ) round_top_and_bottom_cylinder( d=6.8, h=2.0 );
    }
 } // end post
@@ -222,29 +222,29 @@ module minimal() {
 
     rotate( [ 0, 0, bag_contains( wing, "side" ) ? i*180 : (i*90+45) ] )
       translate( [0,-l/2,0] ) {
-	round_top_volume( v, bag_contains(base,"roundover") ? base_round_over : 0 ) 
-	  if( bag_contains( wing, "round" ) ) { 
+	round_top_volume( v, bag_contains(base,"roundover") ? base_round_over : 0 )
+	  if( bag_contains( wing, "round" ) ) {
 	    r = w/2;
-	    translate( [0,+r/2,0] ) cube( [w, l-r, size.z], center=true ); 
+	    translate( [0,+r/2,0] ) cube( [w, l-r, size.z], center=true );
 	    translate( [0,-l/2+r,0] ) cylinder( r=r, h=size.z, center=true );
 	  }
 	  else
-	    cube( v, center=true ); 
+	    cube( v, center=true );
       }
   } // end minimal_wing
 
-  // 1x Front Post (F): 68.75mm from front, on center line 
+  // 1x Front Post (F): 68.75mm from front, on center line
   // 2x Rear Posts (R): 35mm from end, 20.25mm apart (10.125mm off Y-center)
   // 2x Nubs: inline with rear posts (10.125 off center)
-  //          in front of front post by 26.5mm (not critical) 
-  front_origin_X = relative_to_front( 68.5-26.5 ); 
-  rear_origin_X  = relative_to_rear( 35 ); 
+  //          in front of front post by 26.5mm (not critical)
+  front_origin_X = relative_to_front( 68.5-26.5 );
+  rear_origin_X  = relative_to_rear( 35 );
 
   // Seems like width is arbitrary as long as it is large enough
   // to hold the surface features (posts/nibs), but, N.B.:
   //    the slim machine itself is about this wide (36mm)
-  //    the distance from rear post centers to end of machine is ~24mm 
-  //    the distance from the front post center to the front of the machine is ~57mm 
+  //    the distance from rear post centers to end of machine is ~24mm
+  //    the distance from the front post center to the front of the machine is ~57mm
   //    the distance of the nibs from the front of the machine is ~42mm
   //    the total length of the machine is ~182mm
   // so we scale to 184mm - ~2mm ahead and behind the machine
@@ -280,7 +280,7 @@ module minimal() {
   // N.B.: Wings start at the X-axis (so ~w/2 or length is already in the body)
   //
   {
-    wing_length  = bag_contains(wing,"angled") ? w*1.75 : w*1.2; // old: w*1.5 : w 
+    wing_length  = bag_contains(wing,"angled") ? w*1.75 : w*1.2; // old: w*1.5 : w
     wing_offset  = bag_contains(wing,"angled") ? v.x/3 : v.x/5; //w/2.5;
     wing_width   = w/2;
     front_wing_X = bag_contains(wing,"angled") ? front_origin_X+w/2+addon_front-wing_offset : front_origin_X;
@@ -307,7 +307,7 @@ module bottom() {
     }
   }
   else if( bag_contains( base, "minimal" ) ) {
-    $fn = bag_contains( base,"round") || bag_contains( wing, "round" ) ? 60 : $fn; 
+    $fn = bag_contains( base,"round") || bag_contains( wing, "round" ) ? 60 : $fn;
     minimal();
   }
   else {
@@ -328,7 +328,7 @@ module stand() {
     {
       $fn = infill_only ? $fn : 60;
 
-      // 1x Front Post (F): 68.75mm from front, on center line 
+      // 1x Front Post (F): 68.75mm from front, on center line
       add_to_base( [ relative_to_front( 68.75 ),0] ) post();
 
       // 2x Rear Posts (R): 35mm from end, 20.25mm apart (10.125mm off Y-center)
@@ -336,7 +336,7 @@ module stand() {
       add_to_base( [ relative_to_rear( 35 ),-10.125] ) post();
 
       // 2x Nubs: inline with rear posts (10.125 off center)
-      //          in front of front post by 26mm (not critical) 
+      //          in front of front post by 26mm (not critical)
       add_to_base( [relative_to_front( 68.75-26.75 ),+10.125] ) nub();
       add_to_base( [relative_to_front( 68.75-26.75 ),-10.125] ) nub();
     }

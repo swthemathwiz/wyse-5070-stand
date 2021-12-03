@@ -23,12 +23,12 @@ module wyse_5070_box(v,transparency = 0.5, clipz = 0) {
 	    // Rear holes
             [24,v.y/2-10.25], [24,v.y/2+10.25]
           ];
- 
-    for( hole = holes ) { 
+
+    for( hole = holes ) {
       translate( concat( hole, -SMIDGE ) ) {
-        cylinder( h=drill_thickness, d=3.6 ); 
-        translate( [+slot_length/2, 0, drill_thickness/2] ) cube( [slot_length,3.6,drill_thickness], center=true ); 
-        translate( [+slot_length, 0, 0] ) cylinder( h=drill_thickness, d=7.5 ); 
+        cylinder( h=drill_thickness, d=3.6 );
+        translate( [+slot_length/2, 0, drill_thickness/2] ) cube( [slot_length,3.6,drill_thickness], center=true );
+        translate( [+slot_length, 0, 0] ) cylinder( h=drill_thickness, d=7.5 );
       }
     }
   } // end drill_slot_cutouts
