@@ -7,21 +7,35 @@
 // Desc:    A mockup of the Wyse 5070 boxes (including final hole positions)
 //
 
-module wyse_5070_box(v,transparency = 0.5, clipz = 0) {
+include <smidge.scad>
 
-  // Note: these are really the interior spots of the drill holes
-  module drill_holes(v) {
-    // Front holes
-    translate( [v.x-58,v.y/2,-0.001] ) cylinder( h=6, r=5 ); 
-    // Rear holes
-    translate( [24,v.y/2-10.25,-0.001] ) cylinder( h=6, r=5 ); 
-    translate( [24,v.y/2+10.25,-0.001] ) cylinder( h=6, r=5 ); 
-  } // end drill_holes
+module wyse_5070_box(v,transparency = 0.5, clipz = 0) {
+  wall_thickness = 2;
+
+  module drill_slot_cutouts(v) {
+    drill_thickness = wall_thickness+2*SMIDGE;
+    slot_length = 10;
+
+    // Note: these are the final locations that the mounts are below
+    holes = [
+	    // Front hole
+            [v.x-58,v.y/2],
+	    // Rear holes
+            [24,v.y/2-10.25], [24,v.y/2+10.25]
+          ];
+ 
+    for( hole = holes ) { 
+      translate( concat( hole, -SMIDGE ) ) {
+        cylinder( h=drill_thickness, d=3.6 ); 
+        translate( [+slot_length/2, 0, drill_thickness/2] ) cube( [slot_length,3.6,drill_thickness], center=true ); 
+        translate( [+slot_length, 0, 0] ) cylinder( h=drill_thickness, d=7.5 ); 
+      }
+    }
+  } // end drill_slot_cutouts
 
   module interior(v) {
-    wall = 2;
-    i = v - [2*wall,2*wall,2*wall];
-    translate( [wall, wall, wall] ) cube( i );
+    i = v - 2*[wall_thickness,wall_thickness,wall_thickness];
+    translate( [wall_thickness, wall_thickness, wall_thickness] ) cube( i );
   } // end interior
 
   // Mainly so that we can easily tell the front
@@ -38,7 +52,7 @@ module wyse_5070_box(v,transparency = 0.5, clipz = 0) {
     union() {
       difference() {
 	color( "black", transparency ) cube( v );
-	drill_holes( v );
+	drill_slot_cutouts( v );
         interior( v );
       }
       translate( [v.x,v.y/2,20] ) logo();
@@ -48,7 +62,7 @@ module wyse_5070_box(v,transparency = 0.5, clipz = 0) {
   translate( [-v.x/2,-v.y/2,0] ) {
     intersection() {
       main(v);
-      cube( [v.x*2, v.y*2, clipz > 0 ? clipz : v.z*2 ] );
+      translate( [-SMIDGE,-SMIDGE,-SMIDGE] ) cube( [v.x*2, v.y*2, clipz > 0 ? clipz : v.z*2 ] + 2*[SMIDGE,SMIDGE,SMIDGE] );
     }
   }
 } // end wyse_5070_box

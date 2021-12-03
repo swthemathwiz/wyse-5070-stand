@@ -19,18 +19,19 @@ SRCS = \
 	wyse-stand.scad \
 	wyse-5070-box.scad \
 	bag.scad \
-	rounded.scad
+	rounded.scad \
+	smidge.scad \
 
 BUILDS = \
 	wyse-stand-infill.scad \
 	wyse-stand-mesh.scad \
 	wyse-stand-large.scad \
-	wyse-stand-minimal.scad
+	wyse-stand-minimal.scad \
  
 EXTRAS = \
 	Makefile \
 	README.md \
-	LICENSE.txt
+	LICENSE.txt \
 
 TARGETS = $(BUILDS:.scad=.stl)
 
