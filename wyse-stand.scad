@@ -93,18 +93,32 @@ module nub() {
 
 // post:
 //
-// A post is a little 'T' on top of a nub.
+// A post is a little 'T' on top of a nub. A little side-support pillar
+// is added to the 'T' that is not in the original design. It strengthens
+// the weakest point of the post and yet retains compatibility with the
+// OEM keyhole design.
 //
 module post() {
   union() {
     // Base is a nub
     nub();
 
-    // Base Diameter: 3.65mm Base Height : 3.6mm
-    translate( [0,0,5.5] ) cylinder( r=3.65/2, h=3.6 );
+    // Put all this on top of the 5.5mm tall nub
+    translate( [0,0,5.5] ) {
+      // Base Diameter: 3.65mm Base Height: 3.6mm
+      cylinder( d=3.65, h=3.6 );
 
-    // Top Diameter: 6.8mm  Top Height: 2mm
-    translate( [0,0,5.5+3.6] ) round_top_and_bottom_cylinder( d=6.8, h=2.0 );
+      // Side support on base and half-way through top
+      intersection() {
+        support_thickness = 3.65;
+        support_height    = 3.6+1.0;
+	translate( [0,-support_thickness/2,0] ) cube( [6.8/2,support_thickness,support_height] );
+        cylinder( d=6.8, h=support_height );
+      }
+
+      // Top Diameter: 6.8mm  Top Height: 2mm
+      translate( [0,0,3.6] ) round_top_and_bottom_cylinder( d=6.8, h=2.0 );
+     }
    }
 } // end post
 
