@@ -5,23 +5,27 @@ This is a 3D-Printable [Openscad](https://openscad.org/) model of a stand for th
 
 ## Variations
 
-There are three different variations: minimal, large, and mesh:
+There are three different stand variations: minimal, large, and mesh:
 
-1. **Minimal**: is about the width of a slim 5070 with 4 legs and works well for the slim 5070.
+- **Minimal**: is about the width of a slim 5070 with four legs and works well for the slim 5070.
 
-2. **Large**: is very close in shape and style to the OEM stand.
+- **Large**: is very close in shape and style to the OEM stand.
 
-3. **Mesh**: is like the large except that it has a mesh inset that looks like the 5070's textured surface.
+- **Mesh**: is like the large except that it has a mesh inset that looks like the 5070's textured surface.
 
 The length of each stand is about the length of the 5070 (about 20cm), with Minimal being about a centimeter shorter than the Large.
 
 ## 3D Printing
 
-I used a Creality Ender 3 Pro to build with a layer height of 0.20mm. Because the models are quite large, you may wish to do selective infill with structural areas set to high infill and non-structural much lower
+I use a Creality Ender 3 Pro to build with a layer height of 0.20mm. Because the models are quite large, you may wish to do selective infill with structural areas (nubs and posts) set to high infill and non-structural much lower. This saves filament and time. The way to do this varies according to your slicing software. In Cura:
 
-The way to do this varies according to your slicing software. In Cura, you load a stand from _wyse-stand-XXX.stl_ and the infill model from _wyse-stand-infill.stl_. Turn off _Ensure Models are kept apart_ in settings. Select the _wyse-stand-infill_ model, and then use the _Per Model Settings_ and set that model to _Mesh Type: modify settings for overlap_. Choose _Select Settings_ and modify infill to something close to 100%. Then all you have to do is align the two models to overlap the same positions on the build platform. Z-axis setting should be 0 for both; one of X or Y should be zero depending on rotation. Use the overhead view and align the models on the other axis. It should be plus or minus a few millimeters. And then you're set.
+1. Load one of the stand models from _wyse-stand-XXX.stl_ and set infill to a low value (something between 5% to 10%).
+2. Load the infill model from _wyse-stand-infill.stl_ which contains only nubs and posts.
+3. Select the _wyse-stand-infill_ model, and then use the **Per Model Settings** and set that model to **Mesh Type: modify settings for overlaps**. Choose **Select settings**, turn on **Infill Density**, and modify infill density to a high value (something between 50% and 100%).
+4. From the main menu, choose **Preferences** &rarr; **Configure Cura...** &rarr; **General** and disable **Ensure Models are kept apart**.
+5. Align the two models so that they overlap at the same positions on the build plate. The nubs and post should match up. Z-axis setting should be 0 for both; one of X or Y should be zero depending on rotation. Use the overhead view and align the models on the other axis. Accuracy is not overly critical - it can be plus or minus a few millimeters.
 
-After a millimeter or two of base, you should be able to see the difference in infill if you've done it correctly.
+After a millimeter or two of base, you should be able to observe the difference in infill if you've done it correctly.
 
 ## Also Available on Thingiverse
 
