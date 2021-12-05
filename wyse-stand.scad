@@ -86,7 +86,7 @@ module nub() {
   union() {
     round_top_cylinder( d=9.85, h=5.5 );
     if( bag_contains(base,"mesh") || infill_only ) {
-      translate( [ 0, 0, -size.z] ) cylinder( r2=9.85/2, r1=15/2, h=size.z );
+      translate( [ 0, 0, -size.z] ) cylinder( d2=9.85, d1=15, h=size.z );
     }
   }
 } // end nub
@@ -276,9 +276,9 @@ module minimal() {
   round_top_volume( v, bag_contains(base,"roundover") ? base_round_over : 0, c ) {
     if( bag_contains( base,"round") ) {
       // At front
-      translate( [front_origin_X+addon_front, 0, 0 ] ) cylinder( r=w/2, h=h, center=true );
+      translate( [front_origin_X+addon_front, 0, 0 ] ) cylinder( d=w, h=h, center=true );
       // At rear
-      translate( [rear_origin_X-addon_rear, 0, 0 ] ) cylinder( r=w/2, h=h, center=true );
+      translate( [rear_origin_X-addon_rear, 0, 0 ] ) cylinder( d=w, h=h, center=true );
       // Fill in space in between the islands
       translate(c) cube( [l+addon_front+addon_rear-w, w, h], center=true );
     }
@@ -289,7 +289,7 @@ module minimal() {
 
   // Wings:
   //
-  // All these are mostly aesthetics...
+  // This is mostly aesthetics...
   //
   // N.B.: Wings start at the X-axis (so ~w/2 or length is already in the body)
   //
