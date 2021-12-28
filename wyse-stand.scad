@@ -14,10 +14,10 @@ include <rounded.scad>
 // Option to generate volumes that need high-infill
 infill_only = false;
 
-// Show model mounted on the stand ("none", "slim", "extended")
+// Show 5070 box mounted on the stand ("none", "slim", "extended")
 box = "none"; // [ "none", "slim", "extended" ]
 
-// Base styling: "large", "mesh", "minimal" with "round", "roundover"
+// Base styling: "large", "mesh", or "minimal" with "round", "roundover"
 base = [ "minimal", "roundover" ];
 
 // Round over edges of top of base as a percentage of height (only for "roundover" base style)
@@ -26,11 +26,14 @@ base_round_over = 15; // [0:50]
 // Thickness of base
 base_thickness = 7; // [4:0.5:12]
 
+// Extra length added onto the front and rear of the base (only for "minimal" base style)
+base_extra_length = 0; // [0:1:20]
+
 // Wing styling: "angled" or "side", "round" or "straight" (only for "minimal" base style)
 wing = [ "side", "straight" ];
 
 // Round-over edges for nubs/posts as a percentage of radius
-round_over = 15; // [0:50]
+round_over = 15; // [0:25]
 
 /* [Hidden] */
 wing_styles = [ "angled", "side", "round", "straight" ];
@@ -254,19 +257,18 @@ module minimal() {
   front_origin_X = relative_to_front( 68.5-26.5 );
   rear_origin_X  = relative_to_rear( 35 );
 
-  // Seems like width is arbitrary as long as it is large enough
-  // to hold the surface features (posts/nibs), but, N.B.:
-  //    the slim machine itself is about this wide (36mm)
-  //    the distance from rear post centers to end of machine is ~24mm
-  //    the distance from the front post center to the front of the machine is ~57mm
-  //    the distance of the nibs from the front of the machine is ~42mm
-  //    the total length of the machine is ~182mm
-  // so we scale to 184mm - ~2mm ahead and behind the machine
+  // Volume of the central bar beneath the machine.
+  //
+  // Overall width is set to 2mm over the with of the slim machine (36mm).
+  //
+  // Overall length is adjust so that there is 2mm to 3mm on each end. It
+  // is easily adjusted using the stand view with the box showing.
+  //
   w = 38;
   h = size.z;
   l = front_origin_X - rear_origin_X + w;
-  addon_front = 182 - l + 2;
-  addon_rear  = 13; // old: zero
+  addon_front = base_extra_length + 15.5 + (bag_contains( base,"round") ? w/2-3 : 0);
+  addon_rear  = base_extra_length +  8.5 + (bag_contains( base,"round") ? w/2-3 : 0);
 
   v = [l+addon_front+addon_rear,w,h];
   c = [(addon_front+front_origin_X+rear_origin_X-addon_rear)/2,0,0];
@@ -280,7 +282,7 @@ module minimal() {
       // At rear
       translate( [rear_origin_X-addon_rear, 0, 0 ] ) cylinder( d=w, h=h, center=true );
       // Fill in space in between the islands
-      translate(c) cube( [l+addon_front+addon_rear-w, w, h], center=true );
+      translate(c) cube( v - [w,0,0], center=true );
     }
     else {
       translate(c) cube( v, center=true );
@@ -294,8 +296,8 @@ module minimal() {
   // N.B.: Wings start at the X-axis (so ~w/2 or length is already in the body)
   //
   {
-    wing_length  = bag_contains(wing,"angled") ? w*1.75 : w*1.2; // old: w*1.5 : w
-    wing_offset  = bag_contains(wing,"angled") ? v.x/3 : v.x/5; //w/2.5;
+    wing_length  = bag_contains(wing,"angled") ? w*1.75 : w*1.2;
+    wing_offset  = bag_contains(wing,"angled") ? v.x/3 : v.x/5;
     wing_width   = w/2;
     front_wing_X = bag_contains(wing,"angled") ? front_origin_X+w/2+addon_front-wing_offset : front_origin_X;
     rear_wing_X  = bag_contains(wing,"angled") ? rear_origin_X-w/2-addon_rear+wing_offset : rear_origin_X;
