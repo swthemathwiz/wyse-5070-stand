@@ -5,7 +5,7 @@ This is a 3D-Printable [OpenSCAD](https://openscad.org/) model of a stand for th
 
 ## Variations
 
-There are three different stand variations: minimal, large, and mesh:
+There are three different stand variations - Minimal, Large, and Mesh:
 
 - **Minimal**: is about the width of a slim 5070 with four legs and works well for the slim 5070.
 
@@ -20,6 +20,10 @@ There are three different stand variations: minimal, large, and mesh:
 [![View Mesh Model](../media/media/wyse-stand-mesh.icon.png)](../media/media/wyse-stand-mesh.stl "View Model of Mesh Stand")
 
 The length of each stand is about the length of the 5070 (about 20cm), with Minimal being about a centimeter shorter than the Large.
+
+## Source
+
+The model is built using OpenSCAD. _wyse-stand.scad_ is the main file for all stands, with the _wyse-stand-XXX.scad_ files creating a particular variation of stand.
 
 ## 3D Printing
 
