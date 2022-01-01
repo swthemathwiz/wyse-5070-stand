@@ -41,8 +41,8 @@ DEPDIR := .deps
 DEPFLAGS = -d $(DEPDIR)/$*.d
 
 COMPILE.scad = $(OPENSCAD) -o $@ $(DEPFLAGS)
-RENDER.scad = $(OPENSCAD) -o $@ --render --colorscheme=Tomorrow
-RENDERICON.scad = $(RENDER.scad) --camera=-225,410,325,0,0,0 --imgsize=128,128
+RENDER.scad = $(OPENSCAD) -o $@ --render --colorscheme=Tomorrow --camera=-225,410,325,0,0,0
+RENDERICON.scad = $(RENDER.scad) --imgsize=128,128
 
 all: $(TARGETS)
 
