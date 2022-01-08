@@ -44,6 +44,8 @@ COMPILE.scad = $(OPENSCAD) -o $@ $(DEPFLAGS)
 RENDER.scad = $(OPENSCAD) -o $@ --render --colorscheme=Tomorrow --camera=-225,410,325,0,0,0
 RENDERICON.scad = $(RENDER.scad) --imgsize=128,128
 
+.PHONY: all images icons clean distclean
+
 all: $(TARGETS)
 
 images: $(IMAGES)
