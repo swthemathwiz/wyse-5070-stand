@@ -18,7 +18,7 @@ There are three different stand variations - Minimal, Large, and Mesh:
 
 [![View Large Model](../media/media/wyse-stand-large.icon.png)](../media/media/wyse-stand-large.stl "View Model of Large Stand")
 
-- **Mesh**: is like the large except that it has a mesh inset that looks like the 5070's textured surface.
+- **Mesh**: is the same size as large except that it has a mesh inset that mimics the 5070's textured surface.
 
 [![View Mesh Model](../media/media/wyse-stand-mesh.icon.png)](../media/media/wyse-stand-mesh.stl "View Model of Mesh Stand")
 
