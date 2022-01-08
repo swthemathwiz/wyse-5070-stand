@@ -1,9 +1,12 @@
 # wyse-5070-stand
+
+## Introduction
+
 This is a 3D-Printable [OpenSCAD](https://openscad.org/) model of a stand for the [Dell Wyse 5070 Thin Client](https://www.dell.com/en-us/work/shop/wyse-endpoints-and-software/wyse-5070-thin-client/spd/wyse-5070-thin-client) using the existing mounts in the case.
 
 ![Image of Stand with 5070 Mounted](../media/media/stand-side-view.jpg)
 
-## Variations
+## Models and Variations
 
 There are three different stand variations - Minimal, Large, and Mesh:
 
@@ -25,7 +28,7 @@ The length of each stand is about the length of the 5070 (about 20cm), with Mini
 
 The model is built using OpenSCAD. _wyse-stand.scad_ is the main file for all stands, with the _wyse-stand-XXX.scad_ files creating a particular variation of stand.
 
-## 3D Printing
+## Printing
 
 I use a Creality Ender 3 Pro to build with a layer height of 0.20mm. Because the models are quite large, you may wish to do selective infill with structural areas (nubs and posts) set to high infill and non-structural much lower. This saves filament and time. The way to do this varies according to your slicing software. In Cura:
 
