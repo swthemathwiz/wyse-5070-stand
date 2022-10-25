@@ -12,22 +12,32 @@ using the existing mounts in the case.
 
 There are three different stand variations: Minimal, Large, and Mesh.
 
-- **Minimal**: is about the width of a slim 5070 with four legs and works well
-  for the slim 5070.
+<div class="model" data-name="Minimal Stand" data-icon-size="128" data-left-icon="wyse-stand-minimal.icon.png" data-left="wyse-stand-minimal.stl">
 
-[![View Minimal Model](../media/media/wyse-stand-minimal.icon.png)](../media/media/wyse-stand-minimal.stl "View Model of Minimal Stand")
+### Minimal
 
-- **Large**: is very close in shape and style to the OEM stand.
+The minimal stand is about the same width and length of a slim 5070 with
+four legs that point out to the side. It works well for the slim 5070.
 
-[![View Large Model](../media/media/wyse-stand-large.icon.png)](../media/media/wyse-stand-large.stl "View Model of Large Stand")
+</div>
 
-- **Mesh**: is the same size as large except that it has a mesh inset that
-  mimics the 5070's textured surface.
+<div class="model" data-name="Large Stand" data-icon-size="128" data-left-icon="wyse-stand-large.icon.png" data-left="wyse-stand-large.stl">
 
-[![View Mesh Model](../media/media/wyse-stand-mesh.icon.png)](../media/media/wyse-stand-mesh.stl "View Model of Mesh Stand")
+### Large
 
-The length of each stand is about the length of the 5070 (about 20cm), with
-Minimal being about a centimeter shorter than Large.
+The large stand is very close to the OEM stand in shape, size, and style. Like the
+OEM stand it is about 20 cm x 7.5 cm.
+
+</div>
+
+<div class="model" data-name="Mesh Stand" data-icon-size="128" data-left-icon="wyse-stand-mesh.icon.png" data-left="wyse-stand-mesh.stl">
+
+### Mesh
+
+The mesh stand is the same size as large except that it has a mesh inset that
+mimics the 5070's textured surface.
+
+</div>
 
 ## Source
 
