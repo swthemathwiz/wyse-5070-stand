@@ -12,32 +12,32 @@ using the existing mounts in the case.
 
 There are three different stand variations: Minimal, Large, and Mesh.
 
-<div class="model" data-name="Minimal Stand" data-icon-size="128" data-left-icon="wyse-stand-minimal.icon.png" data-left="wyse-stand-minimal.stl">
+<div class="model" data-name="Minimal Stand" data-icon-size="128" data-left-icon="wyse-stand-minimal.icon.png" data-left="wyse-stand-minimal.stl"><!-- expanded by annotate-model --><table align="center" width="100%"><tbody><tr width="100%"><td align="center" width="160" height="160"><a href="../media/media/wyse-stand-minimal.stl" target="_blank" title="View Minimal Stand Model"><img src="../media/media/wyse-stand-minimal.icon.png" alt="Minimal Stand Model" width="128" height="128" /></a></td><td>
 
 ### Minimal
 
 The minimal stand is about the same width and length of a slim 5070 with
 four legs that point out to the side. It works well for the slim 5070.
 
-</div>
+</td></tr></tbody></table></div>
 
-<div class="model" data-name="Large Stand" data-icon-size="128" data-left-icon="wyse-stand-large.icon.png" data-left="wyse-stand-large.stl">
+<div class="model" data-name="Large Stand" data-icon-size="128" data-left-icon="wyse-stand-large.icon.png" data-left="wyse-stand-large.stl"><!-- expanded by annotate-model --><table align="center" width="100%"><tbody><tr width="100%"><td align="center" width="160" height="160"><a href="../media/media/wyse-stand-large.stl" target="_blank" title="View Large Stand Model"><img src="../media/media/wyse-stand-large.icon.png" alt="Large Stand Model" width="128" height="128" /></a></td><td>
 
 ### Large
 
 The large stand is very close to the OEM stand in shape, size, and style. Like the
 OEM stand it is about 20 cm x 7.5 cm.
 
-</div>
+</td></tr></tbody></table></div>
 
-<div class="model" data-name="Mesh Stand" data-icon-size="128" data-left-icon="wyse-stand-mesh.icon.png" data-left="wyse-stand-mesh.stl">
+<div class="model" data-name="Mesh Stand" data-icon-size="128" data-left-icon="wyse-stand-mesh.icon.png" data-left="wyse-stand-mesh.stl"><!-- expanded by annotate-model --><table align="center" width="100%"><tbody><tr width="100%"><td align="center" width="160" height="160"><a href="../media/media/wyse-stand-mesh.stl" target="_blank" title="View Mesh Stand Model"><img src="../media/media/wyse-stand-mesh.icon.png" alt="Mesh Stand Model" width="128" height="128" /></a></td><td>
 
 ### Mesh
 
 The mesh stand is the same size as large except that it has a mesh inset that
 mimics the 5070's textured surface.
 
-</div>
+</td></tr></tbody></table></div>
 
 ## Source
 
