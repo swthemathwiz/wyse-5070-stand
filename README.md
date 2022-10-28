@@ -16,7 +16,7 @@ There are three different stand variations: Minimal, Large, and Mesh.
 
 ### Minimal
 
-The minimal stand is about the same width and length of a slim 5070 with
+The minimal stand is about the same width and length as a slim 5070 with
 four legs that point out to the side. It works well for the slim 5070.
 
 </td></tr></tbody></table></div>
